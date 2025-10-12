@@ -34,6 +34,7 @@ jobs:
       - name: Build
         if: ${{ steps.release.outputs.release_created }}
         run: |
+          export VITE_APP_VERSION=${{ steps.release.outputs.version }}
           pnpm install
           pnpm build
       - name: Upload Release Artifact

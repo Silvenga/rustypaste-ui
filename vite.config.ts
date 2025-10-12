@@ -18,7 +18,9 @@ export default defineConfig({
         target: "https://paste.service.silvenga.com",
         changeOrigin: true,
         bypass: (req) => {
-          const accept = req.method === "POST" || req.url === "/list";
+          const accept = req.method === "POST"
+                         || req.url === "/list"
+                         || req.url === "/version";
           if (!accept) {
             return req.url;
           }

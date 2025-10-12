@@ -9,7 +9,10 @@ export type Auth = {
 export function useAuth() {
   const [authKey, setValue, removeValue] = useLocalStorage<Auth | undefined>("auth-key", undefined);
   return useMemo(() => ({
-    authKey,
+    authKey: {
+      token: authKey?.token.trim() ?? "",
+      instanceUrl: authKey?.instanceUrl.trim().replace(/\/+$/, "") ?? "",
+    },
     isAuthenticated: !!authKey,
     setAuth: setValue,
     clearAuth: removeValue,
