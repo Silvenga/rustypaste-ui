@@ -72,7 +72,7 @@ function Login() {
                   <FormItem>
                     <FormLabel>Auth Token</FormLabel>
                     <FormDescription className="text-xs">
-                      Your token will be stored in locally until you logout.
+                      Your token will be stored on your device until you logout.
                     </FormDescription>
                     <div className="flex gap-2">
                       <FormControl>
