@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Silvenga/rustypaste-ui/compare/v1.0.1...v1.1.0) (2025-11-09)
+
+
+### Features
+
+* added history page ([cea67ca](https://github.com/Silvenga/rustypaste-ui/commit/cea67ca5bb0680830fd7be4be0af5260cfc760ac))
+
 ## [1.0.1](https://github.com/Silvenga/rustypaste-ui/compare/v1.0.0...v1.0.1) (2025-10-13)
 
 
