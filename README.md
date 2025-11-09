@@ -1,7 +1,6 @@
 # rustypaste-ui
 
-A (future) fully-functional UI for Rustypaste.
-
+A fully-functional UI for Rustypaste.
 
 
 **Current features:**
@@ -10,6 +9,8 @@ A (future) fully-functional UI for Rustypaste.
 - Responsive (desktop + mobile).
 - Authentication via tokens stored in local storage.
 - Drag and drop uploading of local files with progress (uses the default expiration of the server).
+- List uploaded files.
+- Delete uploaded files.
 
 ## Installation
 

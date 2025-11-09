@@ -46,8 +46,4 @@ curl "http://<server_address>/list"
 ```
 
 - [X] List
-- [ ] Delete
-
-## Feature Ideas
-
-- [ ] Recent Uploads
+- [X] Delete
