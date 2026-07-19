@@ -19,6 +19,7 @@ export async function getList(args: getListArgs): Promise<ListItem[]> {
     url: args.instanceUrl + "/" + x.file_name,
     fileName: x.file_name,
     fileSize: x.file_size,
+    createdAt: x.creation_date_utc ? new Date(x.creation_date_utc) : null,
     expiresAtUtc: x.expires_at_utc ? new Date(x.expires_at_utc) : null,
   }));
 }
@@ -26,6 +27,7 @@ export async function getList(args: getListArgs): Promise<ListItem[]> {
 type ListItemRaw = {
   file_name: string;
   file_size: number;
+  creation_date_utc: string | null;
   expires_at_utc: string | null;
 };
 
@@ -33,5 +35,6 @@ export type ListItem = {
   url: string;
   fileName: string;
   fileSize: number;
+  createdAt: Date | null;
   expiresAtUtc: Date | null;
 };

@@ -22,7 +22,7 @@ export function Sections() {
       <TabsContent value={TabNames.url} className="w-full max-w-md">
         <ShortenUrlSection />
       </TabsContent>
-      <TabsContent value={TabNames.history} className="w-full max-w-4xl">
+      <TabsContent value={TabNames.history} className="w-full max-w-5xl">
         <HistorySection />
       </TabsContent>
     </Tabs>
