@@ -15,15 +15,22 @@ export default defineConfig({
   server: {
     proxy: {
       "^/": {
-        target: "https://paste.service.silvenga.com",
+        target: "http://localhost:5174",
         changeOrigin: true,
         bypass: (req) => {
-          const accept =
-            req.method === "POST" ||
-            req.method === "DELETE" ||
-            req.url === "/list" ||
-            req.url === "/version";
-          if (!accept) {
+          const isGetLike = req.method === "GET" || req.method === "HEAD";
+          if (!isGetLike) {
+            console.log("[proxy]", req.method, req.url);
+            return undefined;
+          }
+          if (req.url === "/" || req.url === "/index.html") {
+            return req.url;
+          }
+          if (
+            req.url?.startsWith("/@") ||
+            req.url?.startsWith("/src/") ||
+            req.url?.startsWith("/node_modules/")
+          ) {
             return req.url;
           }
           console.log("[proxy]", req.method, req.url);

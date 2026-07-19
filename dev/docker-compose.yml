@@ -1,0 +1,15 @@
+services:
+  rustypaste:
+    image: orhunp/rustypaste:0.17.0
+    container_name: rustypaste-ui-dev
+    user: "0:0"
+    ports:
+      - "5174:8000"
+    volumes:
+      - ./config.toml:/app/config.toml:ro
+      - rustypaste-upload:/app/upload
+    environment:
+      RUST_LOG: info
+
+volumes:
+  rustypaste-upload:

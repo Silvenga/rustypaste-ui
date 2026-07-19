@@ -45,3 +45,15 @@ Right now, the UI assumes the same token can both upload and delete uploads.
 ![Upload Demo](./docs/upload.gif)
 
 ![History Demo](./docs/history.gif)
+
+## Development
+
+```shell
+# Bring up Rustypaste server.
+docker compose --project-directory ./dev/ up --detach --remove-orphans  --renew-anon-volumes
+
+# And run the dev server (proxies to the Rustypaste server).
+pnpm dev
+```
+
+Use `dev-token` for authentication (full permissions).
