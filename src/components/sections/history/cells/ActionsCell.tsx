@@ -29,7 +29,7 @@ function DeleteButton({ name }: { name: string }) {
     setIsDeleting(true);
     try {
       await deleteFile({
-        authToken: authKey.token,
+        token: authKey.token,
         instanceUrl: authKey.instanceUrl,
         name,
       });

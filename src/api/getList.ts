@@ -1,7 +1,7 @@
 import axios from "axios";
 
 type getListArgs = {
-  authToken: string;
+  token: string;
   instanceUrl: string;
   signal: AbortSignal | undefined;
 };
@@ -10,7 +10,7 @@ export async function getList(args: getListArgs): Promise<ListItem[]> {
   const result = await axios.get<ListItemRaw[]>(args.instanceUrl + "/list", {
     responseType: "json",
     headers: {
-      authorization: args.authToken,
+      authorization: args.token,
     },
     signal: args.signal,
   });

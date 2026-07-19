@@ -21,7 +21,7 @@ export function useList() {
         try {
           setIsFetching(true);
           const list = await getList({
-            authToken: authKey.token,
+            token: authKey.token,
             instanceUrl: authKey.instanceUrl,
             signal: abortController.signal,
           });

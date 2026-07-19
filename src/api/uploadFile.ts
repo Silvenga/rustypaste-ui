@@ -2,7 +2,7 @@ import axios from "axios";
 
 type UploadFileArgs = {
   file: File;
-  authToken: string;
+  token: string;
   instanceUrl: string;
   onProgress: (progress: number, rate?: number, estimated?: number) => void;
   expire: string | undefined;
@@ -17,7 +17,7 @@ export async function uploadFile(args: UploadFileArgs) {
   const result = await axios.postForm(args.instanceUrl, form, {
     responseType: "text",
     headers: {
-      authorization: args.authToken,
+      authorization: args.token,
       filename: args.fileName,
       expire: args.expire,
     },

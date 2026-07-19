@@ -14,7 +14,7 @@ export function useVersions() {
         setServerVersion("Loading...");
         try {
           const version = await getVersion({
-            authToken: authKey.token,
+            token: authKey.token,
             instanceUrl: authKey.instanceUrl,
             signal: abortController.signal,
           });

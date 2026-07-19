@@ -18,7 +18,7 @@ export function useFileUploads() {
       try {
         const url = await uploadFile({
           file,
-          authToken: authKey.token,
+          token: authKey.token,
           instanceUrl: authKey.instanceUrl,
           signal: abortController.signal,
           onProgress: (progress, rate, estimated) => {

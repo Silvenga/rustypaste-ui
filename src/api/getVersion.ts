@@ -1,7 +1,7 @@
 import axios from "axios";
 
 type GetVersionArgs = {
-  authToken: string;
+  token: string;
   instanceUrl: string;
   signal: AbortSignal | undefined;
 };
@@ -10,7 +10,7 @@ export async function getVersion(args: GetVersionArgs) {
   const result = await axios.get(args.instanceUrl + "/version", {
     responseType: "text",
     headers: {
-      authorization: args.authToken,
+      authorization: args.token,
     },
     signal: args.signal,
   });

@@ -3,6 +3,7 @@ import { type PropsWithChildren, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { FiInfo } from "react-icons/fi";
 import { z } from "zod";
+import { isTokenValid } from "@/api/isTokenValid.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import {
@@ -15,14 +16,15 @@ import {
   FormMessage,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Spinner } from "@/components/ui/spinner.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 import { Checkbox } from "./ui/checkbox.tsx";
 import { useAuth } from "./useAuth.ts";
 
 const formSchema = z.object({
-  authToken: z.string().min(1),
-  instanceUrl: z.string().startsWith("http"),
+  token: z.string().nonempty("Auth token is required"),
+  instanceUrl: z.url().startsWith("http"),
   checkForReleases: z.boolean(),
 });
 
@@ -38,22 +40,35 @@ function Login() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      authToken: "",
+      token: "",
       instanceUrl: window.location.origin,
       checkForReleases: true,
     },
     mode: "all",
   });
+  const isSubmitting = form.formState.isSubmitting;
 
   const onSubmit = useCallback(
-    (values: z.infer<typeof formSchema>) => {
-      setAuth({
-        token: values.authToken,
-        instanceUrl: values.instanceUrl,
-        checkForReleases: values.checkForReleases,
-      });
+    async (values: z.infer<typeof formSchema>) => {
+      let errorMessage: string | null = null;
+      try {
+        const valid = await isTokenValid(values);
+        if (!valid) {
+          errorMessage = "Token was rejected by the server.";
+        } else {
+          setAuth(values);
+        }
+      } catch (e) {
+        console.warn("Token validation failed", e);
+        errorMessage =
+          e instanceof Error ? `Failed to verify token: ${e.message}` : "Failed to verify token.";
+      }
+      if (errorMessage) {
+        form.setError("token", { message: errorMessage });
+        form.setFocus("token");
+      }
     },
-    [setAuth],
+    [form, setAuth],
   );
 
   return (
@@ -72,7 +87,7 @@ function Login() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
               <FormField
                 control={form.control}
-                name="authToken"
+                name="token"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Auth Token</FormLabel>
@@ -87,9 +102,9 @@ function Login() {
                         className="self-end"
                         variant="default"
                         type="submit"
-                        disabled={!form.formState.isValid}
+                        disabled={!form.formState.isValid || isSubmitting}
                       >
-                        Login
+                        {isSubmitting ? <Spinner /> : "Login"}
                       </Button>
                     </div>
                     <FormMessage className="text-xs" />
@@ -113,7 +128,7 @@ function Login() {
                           </FormDescription>
                           <div className="flex gap-2">
                             <FormControl>
-                              <Input {...field} />
+                              <Input {...field} disabled={isSubmitting} />
                             </FormControl>
                           </div>
                           <FormMessage className="text-xs" />
@@ -133,6 +148,7 @@ function Login() {
                                 onBlur={field.onBlur}
                                 name={field.name}
                                 ref={field.ref}
+                                disabled={isSubmitting}
                               />
                             </FormControl>
                             <div>
