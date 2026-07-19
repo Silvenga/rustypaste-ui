@@ -4,7 +4,7 @@ refresh_rate = "1s"
 [server]
 address = "0.0.0.0:8000"
 url = "http://localhost:5173"
-max_content_length = "100MB"
+max_content_length = "5GB"
 upload_path = "/upload"
 timeout = "30s"
 expose_version = true
