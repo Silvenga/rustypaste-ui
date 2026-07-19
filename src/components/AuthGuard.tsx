@@ -21,6 +21,7 @@ import { Spinner } from "@/components/ui/spinner.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 import { Checkbox } from "./ui/checkbox.tsx";
+import { Field, FieldContent, FieldDescription, FieldLabel, FieldTitle } from "./ui/field.tsx";
 import { useAuth } from "./useAuth.ts";
 
 const logger = getLogger(["rustypaste-ui", "AuthGuard"]);
@@ -143,25 +144,27 @@ function Login() {
                       name="checkForReleases"
                       render={({ field }) => (
                         <FormItem className="mt-4">
-                          <div className="flex gap-2">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={(checked) => field.onChange(checked === true)}
-                                onBlur={field.onBlur}
-                                name={field.name}
-                                ref={field.ref}
-                                disabled={isSubmitting}
-                              />
-                            </FormControl>
-                            <div>
-                              <FormLabel>Check for New Releases</FormLabel>
-                              <FormDescription className="text-xs">
-                                Once daily, fetch the latest version from GitHub's API. Disable for
-                                privacy.
-                              </FormDescription>
-                            </div>
-                          </div>
+                          <FieldLabel>
+                            <Field orientation="horizontal">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={(checked) => field.onChange(checked === true)}
+                                  onBlur={field.onBlur}
+                                  name={field.name}
+                                  ref={field.ref}
+                                  disabled={isSubmitting}
+                                />
+                              </FormControl>
+                              <FieldContent>
+                                <FieldTitle>Check for New Releases</FieldTitle>
+                                <FieldDescription className="text-xs">
+                                  Once daily, fetch the latest version from GitHub&apos;s API.
+                                  Disable for privacy.
+                                </FieldDescription>
+                              </FieldContent>
+                            </Field>
+                          </FieldLabel>
                           <FormMessage className="text-xs" />
                         </FormItem>
                       )}
