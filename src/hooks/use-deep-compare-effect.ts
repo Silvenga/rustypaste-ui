@@ -52,7 +52,7 @@ export function useDeepCompareEffect(
 ): void {
   const memoizedDeps = useDeepCompareMemoize(deps);
 
-  useEffect(effect, memoizedDeps);
+  useEffect(effect, memoizedDeps); // oxlint-disable-line react/exhaustive-deps
 }
 
 export default useDeepCompareEffect;
