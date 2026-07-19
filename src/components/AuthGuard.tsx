@@ -115,7 +115,7 @@ function Login() {
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="-mb-4">Advanced Options</AccordionTrigger>
-                  <AccordionContent className="border-s border-[#6f230b] px-4 pt-4">
+                  <AccordionContent className="border-primary border-s px-4 pt-4">
                     <FormField
                       control={form.control}
                       name="instanceUrl"
@@ -144,7 +144,7 @@ function Login() {
                             <FormControl>
                               <Checkbox
                                 checked={field.value}
-                                onChange={(e) => field.onChange(e.target.checked)}
+                                onCheckedChange={(checked) => field.onChange(checked === true)}
                                 onBlur={field.onBlur}
                                 name={field.name}
                                 ref={field.ref}

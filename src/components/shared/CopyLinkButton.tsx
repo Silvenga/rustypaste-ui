@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react";
+import type { ComponentProps } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
-import { Button, type ButtonProps } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 
-type CopyLinkButtonProps = ButtonProps & {
+type CopyLinkButtonProps = ComponentProps<typeof Button> & {
   text: string;
 };
 
