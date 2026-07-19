@@ -4,21 +4,18 @@ type getListArgs = {
   authToken: string;
   instanceUrl: string;
   signal: AbortSignal | undefined;
-}
+};
 
 export async function getList(args: getListArgs): Promise<ListItem[]> {
-  const result = await axios.get<ListItemRaw[]>(
-    args.instanceUrl + "/list",
-    {
-      responseType: "json",
-      headers: {
-        "authorization": args.authToken,
-      },
-      signal: args.signal,
+  const result = await axios.get<ListItemRaw[]>(args.instanceUrl + "/list", {
+    responseType: "json",
+    headers: {
+      authorization: args.authToken,
     },
-  );
+    signal: args.signal,
+  });
 
-  return result.data.map(x => ({
+  return result.data.map((x) => ({
     url: args.instanceUrl + "/" + x.file_name,
     fileName: x.file_name,
     fileSize: x.file_size,
@@ -29,12 +26,12 @@ export async function getList(args: getListArgs): Promise<ListItem[]> {
 type ListItemRaw = {
   file_name: string;
   file_size: number;
-  expires_at_utc: string | null
-}
+  expires_at_utc: string | null;
+};
 
 export type ListItem = {
   url: string;
   fileName: string;
   fileSize: number;
-  expiresAtUtc: Date | null
-}
+  expiresAtUtc: Date | null;
+};

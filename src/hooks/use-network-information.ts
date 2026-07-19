@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -8,15 +8,7 @@ interface NetworkInformation {
   effectiveType?: "2g" | "3g" | "4g" | "slow-2g";
   rtt?: number;
   saveData?: boolean;
-  type?:
-    | "bluetooth"
-    | "cellular"
-    | "ethernet"
-    | "none"
-    | "wifi"
-    | "wimax"
-    | "other"
-    | "unknown";
+  type?: "bluetooth" | "cellular" | "ethernet" | "none" | "wifi" | "wimax" | "other" | "unknown";
 }
 
 interface UseNetworkInformationReturn {
@@ -27,11 +19,9 @@ interface UseNetworkInformationReturn {
 }
 
 export const useNetworkInformation = (): UseNetworkInformationReturn => {
-  const [networkInfo, setNetworkInfo] = useState<NetworkInformation | null>(
-    null
-  );
+  const [networkInfo, setNetworkInfo] = useState<NetworkInformation | null>(null);
   const [isOnline, setIsOnline] = useState<boolean>(
-    typeof navigator !== "undefined" ? navigator.onLine : true
+    typeof navigator !== "undefined" ? navigator.onLine : true,
   );
 
   const isSupported =
@@ -87,12 +77,7 @@ export const useNetworkInformation = (): UseNetworkInformationReturn => {
         connection.removeEventListener("change", handleConnectionChange);
       }
     };
-  }, [
-    isSupported,
-    updateNetworkInfo,
-    handleOnlineStatusChange,
-    handleConnectionChange,
-  ]);
+  }, [isSupported, updateNetworkInfo, handleOnlineStatusChange, handleConnectionChange]);
 
   return {
     networkInfo,

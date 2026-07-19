@@ -1,7 +1,7 @@
-import { defineConfig } from "vite";
 import path from "path";
-import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
 
 // https://vite.dev/config/
@@ -18,10 +18,11 @@ export default defineConfig({
         target: "https://paste.service.silvenga.com",
         changeOrigin: true,
         bypass: (req) => {
-          const accept = req.method === "POST"
-                         || req.method === "DELETE"
-                         || req.url === "/list"
-                         || req.url === "/version";
+          const accept =
+            req.method === "POST" ||
+            req.method === "DELETE" ||
+            req.url === "/list" ||
+            req.url === "/version";
           if (!accept) {
             return req.url;
           }

@@ -1,23 +1,23 @@
-import logo from "./assets/rustypaste-logo.webp";
+import { FaGithub } from "react-icons/fa";
 import { AuthGuard } from "@/components/AuthGuard.tsx";
 import { Sections } from "@/components/Sections.tsx";
-import { FaGithub } from "react-icons/fa";
-import { useVersions } from "@/components/useVersions.ts";
-import { useAuth } from "@/components/useAuth.ts";
 import { Button } from "@/components/ui/button.tsx";
+import { useAuth } from "@/components/useAuth.ts";
+import { useVersions } from "@/components/useVersions.ts";
+import logo from "./assets/rustypaste-logo.webp";
 
 export function App() {
   const { appVersion, serverVersion } = useVersions();
   const { clearAuth, isAuthenticated } = useAuth();
   return (
-    <div className="container mx-auto w-full h-screen p-4 flex flex-col items-center gap-4">
-      <section className="flex justify-center mt-8">
-        <img src={logo} alt="Rustypaste Logo" className="w-auto h-16" />
+    <div className="container mx-auto flex h-screen w-full flex-col items-center gap-4 p-4">
+      <section className="mt-8 flex justify-center">
+        <img src={logo} alt="Rustypaste Logo" className="h-16 w-auto" />
       </section>
       <AuthGuard>
         <Sections />
       </AuthGuard>
-      <footer className="mt-auto max-w-sm w-full text-gray-500 flex flex-col gap-2">
+      <footer className="mt-auto flex w-full max-w-sm flex-col gap-2 text-gray-500">
         {isAuthenticated && (
           <div className="flex justify-center">
             <Button variant="link" onClick={clearAuth}>
@@ -26,19 +26,17 @@ export function App() {
           </div>
         )}
         <div className="grid grid-cols-3 text-sm">
-          <div className="text-end truncate overflow-hidden">
-            UI: {appVersion}
-          </div>
-          <a href="https://github.com/Silvenga/rustypaste-ui"
-             rel="external nofollow noopener noreferrer"
-             target="_blank"
-             aria-label="Github Repository"
-             className="hover:text-gray-700 flex justify-center">
+          <div className="truncate overflow-hidden text-end">UI: {appVersion}</div>
+          <a
+            href="https://github.com/Silvenga/rustypaste-ui"
+            rel="external nofollow noopener noreferrer"
+            target="_blank"
+            aria-label="Github Repository"
+            className="flex justify-center hover:text-gray-700"
+          >
             <FaGithub className="size-5" />
           </a>
-          <div className="truncate overflow-hidden">
-            Server: {serverVersion}
-          </div>
+          <div className="truncate overflow-hidden">Server: {serverVersion}</div>
         </div>
       </footer>
     </div>

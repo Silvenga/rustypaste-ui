@@ -48,7 +48,7 @@ function useDeepCompareMemoize(value: React.DependencyList | undefined) {
 
 export function useDeepCompareEffect(
   effect: React.EffectCallback,
-  deps?: React.DependencyList
+  deps?: React.DependencyList,
 ): void {
   const memoizedDeps = useDeepCompareMemoize(deps);
 

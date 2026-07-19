@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useReducer } from "react";
-import { useAuth } from "@/components/useAuth.ts";
 import { uploadFile } from "@/api/uploadFile.ts";
+import { useAuth } from "@/components/useAuth.ts";
 
 export function useFileUploads() {
   const [state, dispatch] = useReducer(reducer, defaultState);
@@ -10,86 +10,92 @@ export function useFileUploads() {
     throw new Error("useFileUploads must be used within an AuthProvider");
   }
 
-  const executeUploadFile = useCallback(async (file: File) => {
-    const id = getNextId();
-    const abortController = new AbortController();
-    dispatch({ type: "accept-file", file, id, abort: abortController });
-    try {
-      const url = await uploadFile({
-        file,
-        authToken: authKey.token,
-        instanceUrl: authKey.instanceUrl,
-        signal: abortController.signal,
-        onProgress: (progress, rate, estimated) => {
-          dispatch({
-            type: "file-progressed",
-            id,
-            progress,
-            bytesPerSecond: rate,
-            estimatedSecondsRemaining: estimated,
-          });
-        },
-        // TODO
-        fileName: undefined,
-        expire: undefined,
-        oneShot: false,
-      });
-      dispatch({ type: "file-uploaded", id, url });
-    } catch (e) {
-      console.warn("File upload failed", e);
-      if (e instanceof Error) {
-        dispatch({ type: "file-errored", id, error: e.message });
-      } else {
-        dispatch({ type: "file-errored", id, error: "Unknown error" });
+  const executeUploadFile = useCallback(
+    async (file: File) => {
+      const id = getNextId();
+      const abortController = new AbortController();
+      dispatch({ type: "accept-file", file, id, abort: abortController });
+      try {
+        const url = await uploadFile({
+          file,
+          authToken: authKey.token,
+          instanceUrl: authKey.instanceUrl,
+          signal: abortController.signal,
+          onProgress: (progress, rate, estimated) => {
+            dispatch({
+              type: "file-progressed",
+              id,
+              progress,
+              bytesPerSecond: rate,
+              estimatedSecondsRemaining: estimated,
+            });
+          },
+          // TODO
+          fileName: undefined,
+          expire: undefined,
+          oneShot: false,
+        });
+        dispatch({ type: "file-uploaded", id, url });
+      } catch (e) {
+        console.warn("File upload failed", e);
+        if (e instanceof Error) {
+          dispatch({ type: "file-errored", id, error: e.message });
+        } else {
+          dispatch({ type: "file-errored", id, error: "Unknown error" });
+        }
       }
-    }
-  }, [authKey]);
+    },
+    [authKey],
+  );
 
   const removeFile = useCallback((id: number) => {
     dispatch({ type: "remove-upload", id });
   }, []);
 
-  return useMemo(() => ({
-    files: state.files,
-    uploadFile: executeUploadFile,
-    removeFile,
-  }), [state, executeUploadFile, removeFile]);
+  return useMemo(
+    () => ({
+      files: state.files,
+      uploadFile: executeUploadFile,
+      removeFile,
+    }),
+    [state, executeUploadFile, removeFile],
+  );
 }
 
 type State = {
-  files: ReadonlyArray<UploadState>,
-}
+  files: ReadonlyArray<UploadState>;
+};
 
 export type UploadState =
-  | { state: "queued", id: number, file: File, abort: AbortController }
+  | { state: "queued"; id: number; file: File; abort: AbortController }
   | {
-      state: "uploading",
-      id: number,
-      file: File,
-      abort: AbortController,
-      progress: number,
-      estimatedSecondsRemaining: number | undefined,
-      bytesPerSecond: number | undefined
+      state: "uploading";
+      id: number;
+      file: File;
+      abort: AbortController;
+      progress: number;
+      estimatedSecondsRemaining: number | undefined;
+      bytesPerSecond: number | undefined;
     }
-  | { state: "errored", id: number, file: File, progress: number, error: string }
-  | { state: "uploaded", id: number, file: File, url: string }
-  | { state: "canceled", id: number, file: File }
+  | { state: "errored"; id: number; file: File; progress: number; error: string }
+  | { state: "uploaded"; id: number; file: File; url: string }
+  | { state: "canceled"; id: number; file: File };
 
 const defaultState = { files: [] };
 
 type Action =
-  | { type: "accept-file"; id: number; file: File, abort: AbortController }
+  | { type: "accept-file"; id: number; file: File; abort: AbortController }
   | { type: "cancel-file"; id: number }
   | {
       type: "file-progressed";
-      id: number,
-      progress: number,
-      estimatedSecondsRemaining: number | undefined,
-      bytesPerSecond: number | undefined
+      id: number;
+      progress: number;
+      estimatedSecondsRemaining: number | undefined;
+      bytesPerSecond: number | undefined;
     }
-  | { type: "file-errored"; id: number, error: string }
+  | { type: "file-errored"; id: number; error: string }
   | { type: "file-uploaded"; id: number; url: string }
-  | { type: "remove-upload"; id: number; };
+  | { type: "remove-upload"; id: number };
 
 function reducer(state: State, action: Action): State {
   console.log("dispatch", action);
@@ -108,12 +114,12 @@ function reducer(state: State, action: Action): State {
         ],
       };
     case "cancel-file": {
-      const file = state.files.find(x => x.id === action.id);
+      const file = state.files.find((x) => x.id === action.id);
       if (file && (file.state === "uploading" || file.state === "queued")) {
         file.abort.abort("canceled by user");
         return {
           ...state,
-          files: state.files.map(x => {
+          files: state.files.map((x) => {
             if (x.id === action.id) {
               return {
                 state: "canceled",
@@ -130,7 +136,7 @@ function reducer(state: State, action: Action): State {
     case "file-progressed":
       return {
         ...state,
-        files: state.files.map(x => {
+        files: state.files.map((x) => {
           if (x.id === action.id && (x.state === "queued" || x.state === "uploading")) {
             return {
               state: "uploading",
@@ -148,7 +154,7 @@ function reducer(state: State, action: Action): State {
     case "file-errored":
       return {
         ...state,
-        files: state.files.map(x => {
+        files: state.files.map((x) => {
           if (x.id === action.id && (x.state === "queued" || x.state === "uploading")) {
             return {
               state: "errored",
@@ -164,7 +170,7 @@ function reducer(state: State, action: Action): State {
     case "file-uploaded":
       return {
         ...state,
-        files: state.files.map(x => {
+        files: state.files.map((x) => {
           if (x.id === action.id && (x.state === "queued" || x.state === "uploading")) {
             return {
               state: "uploaded",
@@ -179,7 +185,7 @@ function reducer(state: State, action: Action): State {
     case "remove-upload":
       return {
         ...state,
-        files: state.files.filter(x => x.id !== action.id),
+        files: state.files.filter((x) => x.id !== action.id),
       };
   }
   return state;

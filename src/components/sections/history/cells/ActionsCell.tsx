@@ -1,21 +1,21 @@
 import type { CellContext } from "@tanstack/react-table";
+import { useCallback, useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
+import { deleteFile } from "@/api/deleteFile.ts";
 import type { ListItem } from "@/api/getList.ts";
 import { CopyLinkButton } from "@/components/shared/CopyLinkButton.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { FiTrash2 } from "react-icons/fi";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
-import { useCallback, useState } from "react";
 import { Spinner } from "@/components/ui/spinner.tsx";
-import { deleteFile } from "@/api/deleteFile.ts";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 import { useAuth } from "@/components/useAuth.ts";
 
-type ActionsCellProps = CellContext<ListItem, unknown>
+type ActionsCellProps = CellContext<ListItem, unknown>;
 
 export function ActionsCell({ row }: ActionsCellProps) {
   const url = row.original.url;
   const name = row.original.fileName;
   return (
-    <div className="flex gap-2 items-center justify-end">
+    <div className="flex items-center justify-end gap-2">
       <CopyLinkButton size="sm" className="p-0" text={url} />
       <DeleteButton name={name} />
     </div>
@@ -42,7 +42,7 @@ function DeleteButton({ name }: { name: string }) {
       <TooltipTrigger asChild>
         <Button
           size="sm"
-          className="px-2 flex gap-2 items-center"
+          className="flex items-center gap-2 px-2"
           variant="outline"
           onClick={onClick}
           disabled={isDeleting}

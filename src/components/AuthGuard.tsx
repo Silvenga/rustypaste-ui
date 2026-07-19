@@ -1,12 +1,10 @@
-import { type PropsWithChildren, useCallback } from "react";
-import { useAuth } from "./useAuth.ts";
-import { Button } from "@/components/ui/button.tsx";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
-import { FiInfo } from "react-icons/fi";
-import { Input } from "@/components/ui/input.tsx";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { type PropsWithChildren, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { FiInfo } from "react-icons/fi";
+import { z } from "zod";
+import { Button } from "@/components/ui/button.tsx";
+import { Card, CardContent } from "@/components/ui/card.tsx";
 import {
   Form,
   FormControl,
@@ -16,8 +14,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form.tsx";
-import { Card, CardContent } from "@/components/ui/card.tsx";
+import { Input } from "@/components/ui/input.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion.tsx";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import { useAuth } from "./useAuth.ts";
 
 const formSchema = z.object({
   authToken: z.string().min(1),
@@ -31,7 +31,6 @@ export function AuthGuard({ children }: PropsWithChildren) {
 }
 
 function Login() {
-
   const { setAuth } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,16 +42,18 @@ function Login() {
     mode: "all",
   });
 
-  const onSubmit = useCallback((values: z.infer<typeof formSchema>) => {
-    setAuth({
-      token: values.authToken,
-      instanceUrl: values.instanceUrl,
-    });
-  }, [setAuth]);
+  const onSubmit = useCallback(
+    (values: z.infer<typeof formSchema>) => {
+      setAuth({
+        token: values.authToken,
+        instanceUrl: values.instanceUrl,
+      });
+    },
+    [setAuth],
+  );
 
   return (
-    <div className="flex flex-col gap-6 mt-8 max-w-md">
-
+    <div className="mt-8 flex max-w-md flex-col gap-6">
       <Alert>
         <FiInfo />
         <AlertTitle>Authentication Required</AlertTitle>
@@ -78,10 +79,12 @@ function Login() {
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
-                      <Button className="self-end"
-                              variant="default"
-                              type="submit"
-                              disabled={!form.formState.isValid}>
+                      <Button
+                        className="self-end"
+                        variant="default"
+                        type="submit"
+                        disabled={!form.formState.isValid}
+                      >
                         Login
                       </Button>
                     </div>
@@ -93,8 +96,7 @@ function Login() {
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="-mb-4">Advanced Options</AccordionTrigger>
-                  <AccordionContent className="pt-4 px-4 border-s border-[#6f230b]">
-
+                  <AccordionContent className="border-s border-[#6f230b] px-4 pt-4">
                     <FormField
                       control={form.control}
                       name="instanceUrl"
@@ -102,8 +104,8 @@ function Login() {
                         <FormItem>
                           <FormLabel>Instance URL</FormLabel>
                           <FormDescription className="text-xs">
-                            A custom instance URL, useful if you're not using the same one as this app.
-                            If remote, CORS must be enabled.
+                            A custom instance URL, useful if you're not using the same one as this
+                            app. If remote, CORS must be enabled.
                           </FormDescription>
                           <div className="flex gap-2">
                             <FormControl>
@@ -114,17 +116,13 @@ function Login() {
                         </FormItem>
                       )}
                     />
-
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-
             </form>
           </Form>
         </CardContent>
-
       </Card>
-
     </div>
   );
 }

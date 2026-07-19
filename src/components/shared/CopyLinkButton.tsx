@@ -1,12 +1,12 @@
 import { useCallback, useState } from "react";
-import { Button, type ButtonProps } from "@/components/ui/button.tsx";
 import { FaRegCopy } from "react-icons/fa";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 import { twMerge } from "tailwind-merge";
+import { Button, type ButtonProps } from "@/components/ui/button.tsx";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 
 type CopyLinkButtonProps = ButtonProps & {
-  text: string
-}
+  text: string;
+};
 
 export function CopyLinkButton({ text, className, ...props }: CopyLinkButtonProps) {
   const DEFAULT = "Copy";
@@ -27,7 +27,7 @@ export function CopyLinkButton({ text, className, ...props }: CopyLinkButtonProp
     <Tooltip>
       <TooltipTrigger asChild>
         <Button className={twMerge("relative flex", className)} onClick={run} {...props}>
-          <div className="opacity-0 flex items-center justify-center gap-1" aria-hidden>
+          <div className="flex items-center justify-center gap-1 opacity-0" aria-hidden>
             <FaRegCopy />
             {COPIED}
           </div>
@@ -37,9 +37,7 @@ export function CopyLinkButton({ text, className, ...props }: CopyLinkButtonProp
           </div>
         </Button>
       </TooltipTrigger>
-      <TooltipContent>
-        Copy link to your clipboard.
-      </TooltipContent>
+      <TooltipContent>Copy link to your clipboard.</TooltipContent>
     </Tooltip>
   );
 }

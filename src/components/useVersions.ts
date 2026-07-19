@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useAuth } from "@/components/useAuth.ts";
 import { getVersion } from "@/api/getVersion.ts";
+import { useAuth } from "@/components/useAuth.ts";
 
 export function useVersions() {
-
   const [serverVersion, setServerVersion] = useState("<unknown>");
 
   const { authKey } = useAuth();
@@ -33,7 +32,7 @@ export function useVersions() {
 
   return useMemo(() => {
     return {
-      appVersion: import.meta.env.VITE_APP_VERSION as string ?? "0.0.1",
+      appVersion: (import.meta.env.VITE_APP_VERSION as string) ?? "0.0.1",
       serverVersion,
     };
   }, [serverVersion]);
