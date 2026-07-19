@@ -1,7 +1,6 @@
 # rustypaste-ui
 
-A fully-functional UI for Rustypaste.
-
+A fully functional UI for Rustypaste.
 
 **Current features:**
 
@@ -14,8 +13,8 @@ A fully-functional UI for Rustypaste.
 
 ## Installation
 
-All dependencies are bundled into a single html file to be served directly by
-the [rustpaste](https://github.com/orhun/rustypaste) server. Download the lastest release published using:
+All dependencies are bundled into a single HTML file to be served directly by
+the [rustypaste](https://github.com/orhun/rustypaste) server. Download the lastest release published using:
 
 ```shell
 curl \
@@ -49,8 +48,8 @@ Right now, the UI assumes the same token can both upload and delete uploads.
 ## Development
 
 ```shell
-# Bring up Rustypaste server.
-docker compose --project-directory ./dev/ up --detach --remove-orphans  --renew-anon-volumes
+# Bring up a Rustypaste server.
+docker compose --project-directory ./dev/ up --detach --remove-orphans --renew-anon-volumes
 
 # And run the dev server (proxies to the Rustypaste server).
 pnpm dev
