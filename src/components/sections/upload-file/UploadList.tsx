@@ -107,7 +107,7 @@ function UploadedItem({
               <div className="flex items-center">
                 <Progress value={upload.state === "uploading" ? upload.progress * 100 : 0} />
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger asChild>
                     <Button
                       variant="ghost"
                       size="icon-sm"
@@ -159,7 +159,7 @@ function UploadedItem({
         upload.state === "uploaded") && (
         <div className="absolute top-1 right-1">
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon-sm"
