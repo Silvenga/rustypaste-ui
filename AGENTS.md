@@ -23,6 +23,11 @@ All dependencies must be inlined into this single HTML file.
     - Shared components in `src/components/shared/`.
 - Strict mode is enabled. Do not use `as any` or `@ts-ignore`.
 
+## Testing
+
+- Use `vitest` for unit tests. All hooks should have unit tests.
+- Use sentence case for test names using the "When * then * should" format.
+
 ## Verification
 
 ```shell
