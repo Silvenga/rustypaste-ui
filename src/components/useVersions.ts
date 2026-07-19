@@ -1,6 +1,9 @@
+import { getLogger } from "@logtape/logtape";
 import { useEffect, useMemo, useState } from "react";
 import { getVersion } from "@/api/getVersion.ts";
 import { useAuth } from "@/components/useAuth.ts";
+
+const logger = getLogger(["rustypaste-ui", "useVersions"]);
 
 export function useVersions() {
   const [serverVersion, setServerVersion] = useState<string>();
@@ -20,7 +23,7 @@ export function useVersions() {
           });
           setServerVersion(version);
         } catch (e) {
-          console.warn("Failed to get server version", e);
+          logger.warn("Failed to get server version", { error: e });
           setServerVersion(undefined);
         }
       }

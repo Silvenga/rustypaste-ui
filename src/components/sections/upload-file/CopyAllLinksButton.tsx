@@ -1,6 +1,9 @@
+import { getLogger } from "@logtape/logtape";
 import { useCallback, useMemo, useState } from "react";
 import type { UploadState } from "@/components/sections/upload-file/useFileUploads.ts";
 import { Button } from "@/components/ui/button.tsx";
+
+const logger = getLogger(["rustypaste-ui", "CopyAllLinksButton"]);
 
 type CopyAllLinksButtonProps = {
   files: UploadState[];
@@ -27,7 +30,7 @@ export function CopyAllLinksButton({ files }: CopyAllLinksButtonProps) {
         setCopied(false);
       }, 1_000);
     } catch (error) {
-      console.error("Failed to copy to clipboard", error);
+      logger.error("Failed to copy to clipboard", { error });
     }
   }, [urls]);
 

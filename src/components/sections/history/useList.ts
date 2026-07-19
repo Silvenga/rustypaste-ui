@@ -1,8 +1,11 @@
+import { getLogger } from "@logtape/logtape";
 import { useEffect, useMemo, useState } from "react";
 import { getList, type ListItem } from "@/api/getList.ts";
 import { useAuth } from "@/components/useAuth.ts";
 import { delay } from "@/delay.ts";
 import useNetworkInformation from "@/hooks/use-network-information.ts";
+
+const logger = getLogger(["rustypaste-ui", "useList"]);
 
 const POLL_INTERVAL_MS = 1_000;
 
@@ -30,7 +33,7 @@ export function useList() {
           if (abortController.signal.aborted) {
             return;
           }
-          console.error("Failed to fetch list: ", error);
+          logger.error("Failed to fetch list", { error });
         } finally {
           setIsFetching(false);
         }

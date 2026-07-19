@@ -1,9 +1,12 @@
+import { getLogger } from "@logtape/logtape";
 import { useCallback, useState } from "react";
 import type { ComponentProps } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/ui/button.tsx";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
+
+const logger = getLogger(["rustypaste-ui", "CopyLinkButton"]);
 
 type CopyLinkButtonProps = ComponentProps<typeof Button> & {
   text: string;
@@ -47,7 +50,7 @@ async function copy(text: string) {
   try {
     await navigator.clipboard.writeText(text);
   } catch (error) {
-    console.error("Failed to copy to clipboard, ", error);
+    logger.error("Failed to copy to clipboard", { error });
     throw error;
   }
 }

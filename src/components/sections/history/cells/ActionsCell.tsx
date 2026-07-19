@@ -1,3 +1,4 @@
+import { getLogger } from "@logtape/logtape";
 import type { CellContext } from "@tanstack/react-table";
 import { useCallback, useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
@@ -8,6 +9,8 @@ import { Button } from "@/components/ui/button.tsx";
 import { Spinner } from "@/components/ui/spinner.tsx";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 import { useAuth } from "@/components/useAuth.ts";
+
+const logger = getLogger(["rustypaste-ui", "ActionsCell"]);
 
 type ActionsCellProps = CellContext<ListItem, unknown>;
 
@@ -34,7 +37,7 @@ function DeleteButton({ name }: { name: string }) {
         name,
       });
     } catch (e) {
-      console.error("Failed to delete file: ", e);
+      logger.error("Failed to delete file", { error: e });
     }
   }, [authKey.instanceUrl, authKey.token, name]);
   return (

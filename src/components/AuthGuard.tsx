@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getLogger } from "@logtape/logtape";
 import { type PropsWithChildren, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { FiInfo } from "react-icons/fi";
@@ -21,6 +22,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 import { Checkbox } from "./ui/checkbox.tsx";
 import { useAuth } from "./useAuth.ts";
+
+const logger = getLogger(["rustypaste-ui", "AuthGuard"]);
 
 const formSchema = z.object({
   token: z.string().nonempty("Auth token is required"),
@@ -59,7 +62,7 @@ function Login() {
           setAuth(values);
         }
       } catch (e) {
-        console.warn("Token validation failed", e);
+        logger.warn("Token validation failed", { error: e });
         errorMessage =
           e instanceof Error ? `Failed to verify token: ${e.message}` : "Failed to verify token.";
       }

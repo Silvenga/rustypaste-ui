@@ -1,14 +1,13 @@
+import { getLogger } from "@logtape/logtape";
 import { useCallback, useMemo, useReducer } from "react";
 import { uploadFile } from "@/api/uploadFile.ts";
 import { useAuth } from "@/components/useAuth.ts";
 
-export function useFileUploads() {
-  const [state, dispatch] = useReducer(reducer, defaultState);
+const logger = getLogger(["rustypaste-ui", "useFileUploads"]);
 
+export function useFileUploads() {
   const { authKey } = useAuth();
-  if (!authKey) {
-    throw new Error("useFileUploads must be used within an AuthProvider");
-  }
+  const [state, dispatch] = useReducer(reducer, defaultState);
 
   const executeUploadFile = useCallback(
     async (file: File) => {
@@ -37,7 +36,7 @@ export function useFileUploads() {
         });
         dispatch({ type: "file-uploaded", id, url });
       } catch (e) {
-        console.warn("File upload failed", e);
+        logger.warn("File upload failed", { error: e });
         if (e instanceof Error) {
           dispatch({ type: "file-errored", id, error: e.message });
         } else {
@@ -98,7 +97,7 @@ type Action =
   | { type: "remove-upload"; id: number };
 
 function reducer(state: State, action: Action): State {
-  console.log("dispatch", action);
+  logger.debug("dispatch", action);
   switch (action.type) {
     case "accept-file":
       return {
