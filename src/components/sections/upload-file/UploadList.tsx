@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { TbCancel } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
+import { CopyAllLinksButton } from "@/components/sections/upload-file/CopyAllLinksButton.tsx";
 import type { UploadState } from "@/components/sections/upload-file/useFileUploads.ts";
 import { CopyLinkButton } from "@/components/shared/CopyLinkButton.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -42,6 +43,9 @@ export function UploadList({ files, removeFile }: UploadListProps) {
             <UploadedItem key={file.id} upload={file} removeFile={removeFile} />
           ))}
         </ol>
+        <div className="mt-2 flex justify-center">
+          <CopyAllLinksButton files={completed} />
+        </div>
       </section>
     </>
   );
