@@ -1,23 +1,29 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocalStorage } from "usehooks-ts";
 
-export type Auth = {
-  token: string;
-  instanceUrl: string;
-};
-
 export function useAuth() {
-  const [authKey, setValue, removeValue] = useLocalStorage<Auth | undefined>("auth-key", undefined);
+  const [auth, setValue, _removeValue] = useLocalStorage<Auth | undefined>("auth-key", undefined);
+  const clearAuth = useCallback(() => {
+    localStorage.clear();
+  }, []);
   return useMemo(
     () => ({
       authKey: {
-        token: authKey?.token.trim() ?? "",
-        instanceUrl: authKey?.instanceUrl.trim().replace(/\/+$/, "") ?? "",
+        token: auth?.token.trim() ?? "",
+        instanceUrl: auth?.instanceUrl.trim().replace(/\/+$/, "") ?? "",
+        checkForReleases: auth?.checkForReleases ?? true,
       },
-      isAuthenticated: !!authKey,
+      isAuthenticated: !!auth,
       setAuth: setValue,
-      clearAuth: removeValue,
+      clearAuth,
     }),
-    [removeValue, setValue, authKey],
+    [auth, clearAuth, setValue],
   );
 }
+
+type Auth = {
+  token: string;
+  instanceUrl: string;
+  /** Optional; defaults to `true` when absent. Wiped on logout. */
+  checkForReleases?: boolean;
+};

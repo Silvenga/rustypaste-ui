@@ -17,11 +17,13 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import { Checkbox } from "./ui/checkbox.tsx";
 import { useAuth } from "./useAuth.ts";
 
 const formSchema = z.object({
   authToken: z.string().min(1),
   instanceUrl: z.string().startsWith("http"),
+  checkForReleases: z.boolean(),
 });
 
 export function AuthGuard({ children }: PropsWithChildren) {
@@ -38,6 +40,7 @@ function Login() {
     defaultValues: {
       authToken: "",
       instanceUrl: window.location.origin,
+      checkForReleases: true,
     },
     mode: "all",
   });
@@ -47,6 +50,7 @@ function Login() {
       setAuth({
         token: values.authToken,
         instanceUrl: values.instanceUrl,
+        checkForReleases: values.checkForReleases,
       });
     },
     [setAuth],
@@ -104,13 +108,40 @@ function Login() {
                         <FormItem>
                           <FormLabel>Instance URL</FormLabel>
                           <FormDescription className="text-xs">
-                            A custom instance URL, useful if you're not using the same one as this
-                            app. If remote, CORS must be enabled.
+                            A custom instance URL, useful if you&apos;re not using the same one as
+                            this app. If remote, CORS must be enabled.
                           </FormDescription>
                           <div className="flex gap-2">
                             <FormControl>
                               <Input {...field} />
                             </FormControl>
+                          </div>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="checkForReleases"
+                      render={({ field }) => (
+                        <FormItem className="mt-4">
+                          <div className="flex gap-2">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onChange={(e) => field.onChange(e.target.checked)}
+                                onBlur={field.onBlur}
+                                name={field.name}
+                                ref={field.ref}
+                              />
+                            </FormControl>
+                            <div>
+                              <FormLabel>Check for New Releases</FormLabel>
+                              <FormDescription className="text-xs">
+                                Once daily, fetch the latest version from GitHub's API. Disable for
+                                privacy.
+                              </FormDescription>
+                            </div>
                           </div>
                           <FormMessage className="text-xs" />
                         </FormItem>

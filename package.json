@@ -28,6 +28,7 @@
     "axios": "^1.18.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "compare-versions": "^6.1.1",
     "date-fns": "^4.4.0",
     "filesize": "^11.0.22",
     "lucide-react": "^1.25.0",

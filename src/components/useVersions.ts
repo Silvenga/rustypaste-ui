@@ -3,7 +3,7 @@ import { getVersion } from "@/api/getVersion.ts";
 import { useAuth } from "@/components/useAuth.ts";
 
 export function useVersions() {
-  const [serverVersion, setServerVersion] = useState("<unknown>");
+  const [serverVersion, setServerVersion] = useState<string>();
 
   const { authKey } = useAuth();
 
@@ -21,13 +21,11 @@ export function useVersions() {
           setServerVersion(version);
         } catch (e) {
           console.warn("Failed to get server version", e);
-          setServerVersion("<error>");
+          setServerVersion(undefined);
         }
       }
     })();
-    return () => {
-      abortController.abort();
-    };
+    return () => abortController.abort();
   }, [authKey]);
 
   return useMemo(() => {
