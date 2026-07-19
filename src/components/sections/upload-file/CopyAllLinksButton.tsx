@@ -34,7 +34,7 @@ export function CopyAllLinksButton({ files }: CopyAllLinksButtonProps) {
     }
   }, [urls]);
 
-  return urls.length === 0 ? null : (
+  return urls.length <= 1 ? null : (
     <Button variant="ghost" size="sm" onClick={onClick}>
       {copied ? "Copied!" : `Copy ${urls.length.toLocaleString()} Links`}
     </Button>
