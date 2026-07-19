@@ -77,7 +77,7 @@ function Login() {
                     </FormDescription>
                     <div className="flex gap-2">
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} type="password" />
                       </FormControl>
                       <Button
                         className="self-end"
