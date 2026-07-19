@@ -1,6 +1,7 @@
 import type { CellContext } from "@tanstack/react-table";
 import { MdOutlineInsertDriveFile } from "react-icons/md";
 import type { ListItem } from "@/api/getList.ts";
+import { Link } from "@/components/shared/Link.tsx";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 
 type FileNameCellProps = CellContext<ListItem, string>;
@@ -12,14 +13,12 @@ export function FileNameCell(props: FileNameCellProps) {
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-2">
         <MdOutlineInsertDriveFile />
-        <a
+        <Link
           className="max-w-72 truncate hover:underline focus:underline active:underline"
           href={url}
-          target="_blank"
-          rel="noreferrer noopener"
         >
           {value}
-        </a>
+        </Link>
       </TooltipTrigger>
       <TooltipContent>{value}</TooltipContent>
     </Tooltip>

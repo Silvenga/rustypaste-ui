@@ -109,8 +109,8 @@ function UploadedItem({
                 <Tooltip>
                   <TooltipTrigger>
                     <Button
-                      variant="link"
-                      size="sm"
+                      variant="ghost"
+                      size="icon-sm"
                       onClick={() => {
                         upload.abort.abort("Canceled by user.");
                       }}
@@ -161,8 +161,8 @@ function UploadedItem({
           <Tooltip>
             <TooltipTrigger>
               <Button
-                variant="link"
-                size="sm"
+                variant="ghost"
+                size="icon-sm"
                 className="opacity-60 hover:opacity-100"
                 onClick={() => {
                   removeFile(upload.id);
