@@ -24,8 +24,8 @@ export function UploadDropzone({ uploadFile }: UploadDropzoneProps) {
     <Card
       {...getRootProps()}
       className={twMerge(
-        "border-dashed cursor-pointer hover:bg-slate-50 transition-colors",
-        isDragActive && "bg-slate-100 border-slate-500",
+        "border-dashed cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors",
+        isDragActive && "bg-slate-100 border-slate-500 dark:bg-slate-800 dark:border-slate-600",
       )}
     >
       <CardContent className="flex h-32 flex-col items-center justify-center gap-2">
