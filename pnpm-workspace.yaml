@@ -1,0 +1,6 @@
+allowBuilds:
+  '@tailwindcss/oxide': set this to true or false
+  esbuild: set this to true or false
+minimumReleaseAgeExclude:
+  - react-dropzone@19.0.2
+  - react-hook-form@7.82.0
