@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/Silvenga/rustypaste-ui/compare/v1.2.0...v1.3.0) (2026-07-20)
+
+
+### Features
+
+* added token validation during login ([73436e9](https://github.com/Silvenga/rustypaste-ui/commit/73436e9756e646dcc43105d7d2609123b1e1fe68))
+* added update checking with privacy opt-out ([1699326](https://github.com/Silvenga/rustypaste-ui/commit/169932608cac2d139cefa46349866ac72bb1c11a))
+
+
+### Bug Fixes
+
+* fixed nested buttons in upload list ([8f41f26](https://github.com/Silvenga/rustypaste-ui/commit/8f41f264ac8aec0d537b08cedaeb32b05512b4ad))
+
 ## [1.2.0](https://github.com/Silvenga/rustypaste-ui/compare/v1.1.0...v1.2.0) (2026-07-19)
 
 
