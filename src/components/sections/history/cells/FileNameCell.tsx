@@ -11,10 +11,10 @@ export function FileNameCell(props: FileNameCellProps) {
   const url = props.row.original.url;
   return (
     <Tooltip>
-      <TooltipTrigger className="flex items-center gap-2">
-        <MdOutlineInsertDriveFile />
+      <TooltipTrigger className="flex items-center gap-2 min-w-0">
+        <MdOutlineInsertDriveFile className="flex-shrink-0" />
         <Link
-          className="max-w-72 truncate hover:underline focus:underline active:underline"
+          className="truncate hover:underline focus:underline active:underline block"
           href={url}
         >
           {value}

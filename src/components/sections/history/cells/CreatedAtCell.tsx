@@ -9,7 +9,7 @@ export function CreatedAtCell({ value }: { value: Date | null }) {
         <LuCalendarCheck2 />
         <span>{formatDistanceToNow(value, { addSuffix: true })}</span>
       </TooltipTrigger>
-      <TooltipContent>{format(value, "Pp (O)")}</TooltipContent>
+      <TooltipContent>{format(value, "PPpp")}</TooltipContent>
     </Tooltip>
   ) : (
     "Unknown"

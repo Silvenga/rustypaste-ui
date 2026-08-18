@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export const TabNames = {
   files: "files",
+  text: "text",
   url: "url",
   history: "history",
 } as const;
@@ -11,7 +12,7 @@ type TabValue = (typeof VALID_TABS)[number];
 
 function readHash(): TabValue {
   const hash = window.location.hash.replace(/^#/, "");
-  return VALID_TABS.includes(hash as TabValue) ? (hash as TabValue) : TabNames.files;
+  return VALID_TABS.includes(hash as TabValue) ? (hash as TabValue) : TabNames.text;
 }
 
 export function useHashRoute(): [TabValue, (next: string) => void] {
@@ -24,7 +25,7 @@ export function useHashRoute(): [TabValue, (next: string) => void] {
   }, []);
 
   const setRoute = useCallback((next: string) => {
-    const valid = VALID_TABS.includes(next as TabValue) ? (next as TabValue) : TabNames.files;
+    const valid = VALID_TABS.includes(next as TabValue) ? (next as TabValue) : TabNames.text;
     if (window.location.hash === `#${valid}`) return;
     window.history.replaceState(null, "", `#${valid}`);
     setValue(valid);

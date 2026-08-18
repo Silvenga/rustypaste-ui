@@ -9,7 +9,7 @@ export function ExpiresAtCell({ value }: { value: Date | null }) {
         <LuCalendarClock />
         <span>in {formatDistanceToNow(value)}</span>
       </TooltipTrigger>
-      <TooltipContent>{format(value, "Pp (O)")}</TooltipContent>
+      <TooltipContent>{format(value, "PPpp")}</TooltipContent>
     </Tooltip>
   ) : (
     "Never"

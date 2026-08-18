@@ -1,5 +1,6 @@
 import { HistorySection } from "@/components/sections/history/HistorySection.tsx";
 import { ShortenUrlSection } from "@/components/sections/shorten-url/ShortenUrlSection.tsx";
+import { TextEditorSection } from "@/components/sections/text-editor/TextEditorSection.tsx";
 import { UploadFileSection } from "@/components/sections/upload-file/UploadFileSection.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabNames, useHashRoute } from "@/components/use-hash-route";
@@ -10,12 +11,16 @@ export function Sections() {
   return (
     <Tabs value={tab} onValueChange={setTab} className="mt-4 flex w-full flex-col items-center">
       <TabsList className="w-full max-w-md">
+        <TabsTrigger value={TabNames.text}>Text</TabsTrigger>
         <TabsTrigger value={TabNames.files}>Files</TabsTrigger>
         <TabsTrigger value={TabNames.url} className="hidden">
           URL
         </TabsTrigger>
         <TabsTrigger value={TabNames.history}>History</TabsTrigger>
       </TabsList>
+      <TabsContent value={TabNames.text} className="w-full max-w-md">
+        <TextEditorSection />
+      </TabsContent>
       <TabsContent value={TabNames.files} className="w-full max-w-md">
         <UploadFileSection />
       </TabsContent>
